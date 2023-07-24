@@ -1,0 +1,27 @@
+.profile{
+    display: flex;
+    flex-direction: column;
+   
+}
+.fcount{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+     gap: 40px;
+}
+.cf{
+    background-color: azure;
+    padding: 10px;
+}
+.count{
+    font-size: 25px;
+}
+.create{
+    margin: 20px;
+    height: 40px;
+    border-radius: 5px;
+    font-family:cursive;
+    color: white;
+    background-color: rgb(72, 69, 69);
+}

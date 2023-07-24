@@ -1,0 +1,22 @@
+.navbar-brand{
+    color: AEE2FF;
+    font-size: 23px;
+}
+.ser .form-control  {
+    display:none;
+}
+.ser .btn-outline-success{
+    display:none;
+}
+@media (min-width: 450px) and (max-width: 1000px){
+    .ser .form-control{
+        display:flex;
+        width: 140px;
+        justify-content: end;
+    }
+    .ser .btn-outline-success{
+        display:flex;
+        width: 70px;
+        justify-content: end;
+    }
+}

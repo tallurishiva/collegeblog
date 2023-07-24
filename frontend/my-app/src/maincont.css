@@ -1,0 +1,29 @@
+.main{
+    
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    margin: 20px;
+}
+h1{
+    font-family:'Courier New', Courier, monospace;
+    margin: 10px;
+    margin-left: 0px;
+}
+.aprofile{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.aprofile p{
+    margin: 0px;
+}
+.aprofile button{
+    width: 130px;
+    height: 40px;
+    text-align: center;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
