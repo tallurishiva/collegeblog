@@ -1,14 +1,11 @@
 .pblog{
-    
     margin: 20px;
     margin-bottom:10px ;
     margin-top:10px ;
-    height: 300px;
     border: 1px solid black;
     display: flex;
     text-align: start;
     flex-direction: column;
-  
 }
 .ntitle{
     display: flex;
@@ -32,6 +29,7 @@
 .conte{
     display: flex;
     height: 100%;
+    margin: 2.5%;
     flex-direction: column;
     justify-content: space-between;
 }

@@ -10,6 +10,8 @@ export default function Profile(){
     console.log(userLoggedIn);
     const [data,setdata]=React.useState([]);
     const [del,setdel]=React.useState(0);
+    const [fc,setfc]=React.useState(-1);
+    const [ffc,setffc]=React.useState(-1);
     function dele(){
         setdel(del-1);
     }
@@ -19,6 +21,11 @@ export default function Profile(){
             const posts=await axios.post("http://localhost:3001/myblogs",{id:userLoggedIn});
             setdata(posts.data);
             setdel(posts.data.length);
+            const ffc = await axios.post("http://localhost:3001/followingcount", { id:userLoggedIn });
+            setfc(ffc.data.count);
+            const ff = await axios.post("http://localhost:3001/followcount", { id:userLoggedIn });
+            console.log("ff==",ff.data.count);
+            setffc(ff.data.count);
             console.log("ccc===",posts.data);
         }
         catch{
@@ -29,14 +36,14 @@ export default function Profile(){
     },[del]);
     return (
         <div className="profile">
-            <h1 style={{textAlign:"center"}}>Name</h1>
+            <h1 style={{textAlign:"center"}}>{userLoggedIn}</h1>
             <div className="fcount">
             <div className="cf">
-            <h6 className="count">123</h6>
+            <h6 className="count">{fc}</h6>
             <h6>followers</h6>
             </div>
             <div className="cf">
-            <h6 className="count">23</h6>
+        <h6 className="count">{ffc}</h6>
             <h6>following</h6>
             </div>
             </div>

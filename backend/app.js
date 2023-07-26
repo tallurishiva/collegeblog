@@ -25,6 +25,13 @@ const LoginSchema=new mongoose.Schema({
       folerid:String,
       folingid:String
   });
+  const commentSchema=new mongoose.Schema({
+    bid:String,
+    userid:String,
+    cmt:String,
+    createdat:{type:Date,default:Date.now}
+});
+var comment=mongoose.model("comment",commentSchema);
 var follow=mongoose.model("follow",followSchema);
 var blog=mongoose.model("blog",BlogSchema);
 var user=mongoose.model("user",LoginSchema);
@@ -124,30 +131,60 @@ app.post("/follow",function(req,res){
   .catch(()=>{res.send("error")});
   }
 });
-app.post("/followcount",function(req,res){
-    follow.find({folerid:req.body.id})
-    .then((found)=>{
-      if(found.length!=0){
-        res.send(found.length);
-      }
-      else{
-        res.send("0");
-      }
+app.post("/followcount", function(req, res) {
+  console.log("body==",req.body);
+  follow.countDocuments({ folingid: req.body.id })
+    .then((count) => {
+      console.log("Count:", count);
+      res.json({ count: count }); 
     })
-    .catch(err=>{console.log(err)});
-})
+    .catch((error) => {
+      console.error("Error counting followers:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
+});
 app.post("/followingcount",function(req,res){
-  follow.find({folingid:req.body.id})
-  .then((found)=>{
-    if(found.length!=0){
-      res.send(found.length);
-    }
-    else{
-      res.send("0");
-    }
-  })
-  .catch(err=>{console.log(err)});
+  console.log("body==",req.body);
+  follow.countDocuments({ folerid: req.body.id })
+    .then((count) => {
+      console.log("Count:", count);
+      res.json({ count: count }); 
+    })
+    .catch((error) => {
+      console.error("Error counting followers:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
 })
+app.post("/isfol",function(req,res){
+  console.log("body==",req.body);
+  follow.countDocuments({ folerid: req.body.id,folingid: req.body.uid })
+    .then((count) => {
+      console.log("Count:", count);
+      res.json({ count: count }); 
+    })
+    .catch((error) => {
+      console.error("Error counting followers:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    });
+})
+app.post("/comment",function(req,res){
+    const newcmt={
+      bid:req.body.bid,
+      userid:req.body.uid,
+      cmt:req.body.comment
+    }
+    comment.insertMany([newcmt])
+    .then(()=>{res.send(success)})
+    .catch(()=>{console.error()});
+})
+app.post("/cmts",function(req,res){
+    comment.find({bid:req.body.id})
+    .then((found)=>{
+      console.log(found);
+      res.send(found);
+    })
+    .catch(()=>{console.error()});
+});
 app.listen(3001, function(){
     console.log("Server started on port 3001");
   });
