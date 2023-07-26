@@ -2,8 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from './AppContext';
 import './nav.css';
-const Nav = () => {
+const Nav = (props) =>{
     var nav=useNavigate();
+    console.log(props);
+    
+    //const userLoggedIn="srk";
     const { userLoggedIn, setUserLoggedIn } = React.useContext(AppContext);
     console.log("id=",userLoggedIn);
     var [show,setshow]=React.useState(true);
@@ -14,12 +17,11 @@ const Nav = () => {
     }
     function log(){
       nav("/Login");
-    
     }
   return(
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
-        <a className="navbar-brand" href="" onClick={()=>{nav("/")}} >Creative Blog</a>
+        <a className="navbar-brand" href="" onClick={()=>{nav("/home")}} >Creative Blog</a>
         <form className="d-flex ser" role="search">
             <input className="form-control me-2 " type="search" placeholder="Search" aria-label="Search" />
             <button className="btn btn-outline-success " type="submit">Search</button>
@@ -30,7 +32,7 @@ const Nav = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="" onClick={()=>{nav("/")}}>Home</a>
+              <a className="nav-link active" aria-current="page" href="" onClick={()=>{nav("/home")}}>Home</a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">News</a>

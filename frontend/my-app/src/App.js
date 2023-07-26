@@ -18,7 +18,7 @@ import Searchsol from './Searchsol';
 import Rout from './Rout';
 //import AppContext,{useGc} from './Contex';
 //import AppContext, { useGc } from './Contex';
-import { AppProvider } from './AppContext';
+//import AppContext from './AppContext';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 function App() {
@@ -27,9 +27,8 @@ function App() {
   return (
     <div className="App">
       
-     
       <Rout/>
-      
+     
       
     </div>
   );

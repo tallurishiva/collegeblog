@@ -1,19 +1,37 @@
 import React from "react";
 import './hcomp.css';
 import Cont from "./Cont";
-export default function Hcomp(){
+import axios from "axios";
+export default function Hcomp(props){
+        const init={
+             Title:"Loading",
+             cont:"Loading....."
+        }
+        const [loading,setloading]=React.useState(true);
+        const [data,setdata]=React.useState([init]);
+        var title="Top News";
+        if(props.typ!=="News"){
+            title="New College Stories";
+        }
+        React.useEffect(
+            ()=>{
+                async function data(){
+                    try{
+                    var posts=await axios.post("http://localhost:3001/typee",{typ:props.typ});
+                    console.log(posts.data);
+                 setdata(posts.data);}
+                    catch{
+                        console.error();
+                    }
+                }
+                data();
+            }
+        ,[])
        return (
         <div className="hcomp">
-            <h6 className="title">Top News:</h6>
+            <h6 className="title">{title}</h6>
             <div className="content">
-            <Cont/>
-            <Cont/>
-            <Cont/>
-            <Cont/>
-            <Cont/>
-            <Cont/>
-            <Cont/>
-            <Cont/>
+            {data.map((item)=>{return <Cont item={item}/>})}
             </div>
             <p className="title2"><p>get more...</p></p>
         </div>

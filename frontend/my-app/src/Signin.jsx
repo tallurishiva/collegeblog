@@ -14,19 +14,19 @@ export default function Signin(){
     var [number,setnumber]=React.useState("");
     async function sud(event){
       event.preventDefault();
-      //console.log("name:"+name+"  password:"+password +" email:"+email);
       try{
-      var find= await axios.post("http://localhost:3001/signup",{name:name,email:email,password:password,number:number})}
+      var find= await axios.post("http://localhost:3001/signup",{name:name,email:email,password:password,number:number})
+      }//var data=await find.data();}
       catch(error){
           console.error();
       }
-      console.log("find:"+find.data.sts);
-      if(find.data.sts=="success"){
+      console.log("find:"+find.data);
+      if(find.data=="success"){
         nav("/Login");
     }
-      if(find.data.sts=="uexists"){setuerr(true)};
-      if(find.data.sts=="exists"){seterr(true)};
-  }  
+      if(find.data=="uexists"){setuerr(true)};
+      if(find.data=="exists"){seterr(true)};
+  }
     return (
         <div className="login">
         <div className="signin-container">

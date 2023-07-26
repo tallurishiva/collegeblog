@@ -12,9 +12,9 @@ export default function Home(){
     return (
         <div>
             <Slide/>
-            <Hcomp/>
-            <Hcompp/>
-            <Hcomp/>
+            <Hcomp typ="Collegestories"/>
+            <Hcompp typ="Ideas"/>
+            <Hcomp typ="News"/>
         </div>
     );
 }

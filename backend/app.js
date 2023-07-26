@@ -21,6 +21,11 @@ const LoginSchema=new mongoose.Schema({
     cont:String,
     createdat:{type:Date,default:Date.now}
   });
+  const followSchema=new mongoose.Schema({
+      folerid:String,
+      folingid:String
+  });
+var follow=mongoose.model("follow",followSchema);
 var blog=mongoose.model("blog",BlogSchema);
 var user=mongoose.model("user",LoginSchema);
 app.get("/",function(req,res){
@@ -33,25 +38,28 @@ app.post("/signup",function(req,res){
     password:req.body.password,
     phone:req.body.number
   };
-  user.find({email:newuser.email}).then((found)=>{
-    if(found.length!=0){
-      res.send({sts:"exists"});
-    }
-  })
-  user.find({userName:newuser.userName}).then((found)=>{
-    if(found.length!=0){
-      res.send({sts:"uexists"});
-    }
-  })
-  user.insertMany([newuser])
-  .then((suc)=>{
-    //cart.insertMany([{cartid:suc[0].email}]);
-    res.send({sts:"success",dit:suc[0].email});
-  })
-  .catch(err=>{console.log(err);
-        res.send({sts:"error",dit:null}); 
+    user.find({ email: newuser.email }).then((found) => {
+      if (found.length != 0) {
+        return res.send("exists");
+      }
+  
+      user.find({ userName: newuser.userName }).then((found) => {
+        if (found.length != 0) {
+          return res.send("uexists");
+        }
+  
+        user
+          .insertMany([newuser])
+          .then(() => {
+            res.send("success");
+          })
+          .catch((err) => {
+            console.log(err);
+            res.send("error");
+          });
+      });
+    });
   });
-})
 app.post("/login",function(req,res){
   console.log(req.body);
   user.find({userName:req.body.userid,password:req.body.password})
@@ -62,6 +70,84 @@ app.post("/login",function(req,res){
         res.send("err");
       }
 })});
+app.post("/typee",function(req,res){
+  blog.find({category:req.body.typ})
+  .then((found)=>{
+    if(found.length!=0){
+      res.send(found);
+    }
+    else{
+      res.send("NF");
+    }
+  })
+  .catch(()=>{console.error()});
+})
+app.post("/blogid",function(req,res){
+  blog.findById(req.body.id)
+  .then((found)=>{res.send(found)})
+  .catch(()=>{console.error();
+      res.send("error"); 
+  })
+})
+app.post("/myblogs",function(req,res){
+  console.log(req.body.id);
+  blog.find({userid:req.body.id})
+  .then((found)=>{res.send(found)})
+  .catch(()=>{console.error()});
+})
+app.post("/blog",function(req,res){
+  console.log(req.body);
+  const newb={
+    userid:req.body.eid,
+    Title:req.body.title,
+    subtitle:req.body.subtitle,
+    category:req.body.Category,
+    cont:req.body.cont
+  }
+  blog.insertMany([newb]);
+  console.log("insertedtype==",req.body.Category);
+  res.send("success");
+})
+app.post("/delet",function(req,res){
+  console.log(req.body);
+  blog.findByIdAndDelete(req.body.id).then((found)=>{res.send("successfully deleted")})
+  .catch(err=>{console.log(err)});
+});
+app.post("/follow",function(req,res){
+  if(req.body.sts=="1"){
+  follow.insertMany([{folerid:req.body.flid,folingid:req.body.flrid}])
+  .then(()=>{res.send("following")})
+  .catch(()=>{res.send("error")});}
+  else{
+    follow.findOneAndDelete({folerid:req.body.flid,folingid:req.body.flrid})
+    .then(()=>{res.send("unfollowed")})
+  .catch(()=>{res.send("error")});
+  }
+});
+app.post("/followcount",function(req,res){
+    follow.find({folerid:req.body.id})
+    .then((found)=>{
+      if(found.length!=0){
+        res.send(found.length);
+      }
+      else{
+        res.send("0");
+      }
+    })
+    .catch(err=>{console.log(err)});
+})
+app.post("/followingcount",function(req,res){
+  follow.find({folingid:req.body.id})
+  .then((found)=>{
+    if(found.length!=0){
+      res.send(found.length);
+    }
+    else{
+      res.send("0");
+    }
+  })
+  .catch(err=>{console.log(err)});
+})
 app.listen(3001, function(){
     console.log("Server started on port 3001");
   });
