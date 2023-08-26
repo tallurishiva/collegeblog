@@ -1,10 +1,8 @@
 import React from "react";
 import './compose.css';
 import axios from "axios";
-import {AppContext} from "./AppContext";
 export default function Compose(){
-  const { userLoggedIn, setUserLoggedIn } = React.useContext(AppContext);
-    console.log("composing=",userLoggedIn);
+    //console.log("composing=",userLoggedIn);
     var [title,settitle]=React.useState("");
     var [subtitle,setsubtitle]=React.useState("");
     var [Category,setcategory]=React.useState("");
@@ -13,13 +11,13 @@ export default function Compose(){
     async function sud(event){
       event.preventDefault();
       //console.log("name:"+name+"  password:"+password +" email:"+email);
-      try{
+      /*try{
       var find= await axios.post("http://localhost:3001/blog",{eid:userLoggedIn,title:title,subtitle:subtitle,Category:Category,cont:cont});
       alert(find.data);
     }
       catch(error){
           console.error();
-      }
+      }*/
   }  
     return (
         <div className="compose">

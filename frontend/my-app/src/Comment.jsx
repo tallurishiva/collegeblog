@@ -9,10 +9,10 @@ export default function(props){
                 <div style={{margin:10}}>{props.item.userid}</div>
                 <em style={{margin:10}}>{date}</em>
             </div>
-            <hr/>
             <div style={{margin:10}}>
                 {props.item.cmt}
             </div>
+            <hr/>
         </div>
     );
 }

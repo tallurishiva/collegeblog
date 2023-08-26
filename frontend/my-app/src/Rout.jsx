@@ -4,21 +4,15 @@ import Nav from './Nav';
 import Home from './Home';
 import Login from './Login';
 import Signin from './Signin';
-//import AppContext,{ useGc } from './AppContext';
 import Footer from './Footer';
 import Compose from './Compose'
-
+import Searchsol from './Searchsol';
 import Profile from './Profile';
-import  {AppProvider} from './AppContext';
 import Maincont from './Maincont';
-export default function Rout() {
-  //const { userLoggedIn, toggleUserLoggedIn } = React.useContext(AppContext);
-    //const [eid,seteid]=useGc();
-    //console.log("eid=",userLoggedIn);
+export default function Rout(){
     return (
-      <div>
+      <div> 
         <Router>
-          <AppProvider>
           <Nav/>
           <Routes>
           <Route path="/" element={<Home/>} />
@@ -27,11 +21,13 @@ export default function Rout() {
             <Route path="/Profile" element={<Profile/>} />
             <Route path="/Signin" element={<Signin/>}/>
             <Route path="/Maincont/:id" element={<Maincont />}/>
+            <Route path="/Search/:item" element={<Searchsol/>}/>
             <Route path="/Compose" element={<Compose/>}/>
           </Routes>
           <Footer/>
-          </AppProvider>
+         
         </Router>
+        
       </div>
     );
   }

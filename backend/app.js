@@ -1,12 +1,23 @@
 const express = require("express");
 const cors=require("cors");
 const mongoose=require("mongoose");
+const cookieSession=require("cookie-session");
+const cookieparser=require("cookie-parser");
 const bodyParser = require("body-parser");
 const app = express();
 mongoose.connect("mongodb+srv://shivatalluri725:Shiva551@cluster0.xtiys65.mongodb.net/newblog");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors());
+app.use(cookieparser());
+app.use(
+  cookieSession({
+    name: 'session',
+    keys: ['your-secret-key'],
+    maxAge: 7 * 24 * 60 * 60 * 1000, // Cookie will expire in 7 days
+    httpOnly: true,
+  })
+);
 const LoginSchema=new mongoose.Schema({
     userName:String,
     email:{type:String,require:true},
@@ -35,9 +46,33 @@ var comment=mongoose.model("comment",commentSchema);
 var follow=mongoose.model("follow",followSchema);
 var blog=mongoose.model("blog",BlogSchema);
 var user=mongoose.model("user",LoginSchema);
+BlogSchema.index({ Title: "text", subtitle: "text", category: "text",userid:"text" });
 app.get("/",function(req,res){
     res.send("hello world");
 });
+app.post('/logout', function (req, res) {
+  // Clear the session data (this will remove the associated cookie)
+  console.log(req.session);
+  req.session = null;
+  console.log("loged out");
+  // Respond with a success message
+  res.send('Logged out successfully');
+});
+app.post("/search", async function(req, res) {
+  const searchTerm = req.body.searchTerm; // Get the search term from the request body
+  console.log("searhing for=",searchTerm);
+  try {
+    const searchResults = await blog.aggregate([
+      { $match: { $or:[{userid: {$regex:searchTerm,$options:"i"}},{Title:{$regex:searchTerm,$options:"i"}},{subtitle:{$regex:searchTerm,$options:"i"}}] }}
+    ]);
+    console.log(searchResults);
+    res.send(searchResults);
+  } catch (error){
+    console.error("Error searching:", error);
+    res.status(500).json({ error: "An error occurred while searching" });
+  }
+});
+
 app.post("/signup",function(req,res){
   const newuser={
     userName:req.body.name,
@@ -72,6 +107,8 @@ app.post("/login",function(req,res){
   user.find({userName:req.body.userid,password:req.body.password})
     .then(function(found){
       if(found.length!=0){
+        //res.cookie("uid",req.body.userid);
+        req.session.uid = req.body.userid;
         res.send("success");}
       else{
         res.send("err");

@@ -1,23 +1,33 @@
 import React from "react";
 import "./profile.css";
-import  {AppContext}  from "./AppContext";
+//import  {AppContext}  from "./AppContext";
 import { useNavigate } from 'react-router-dom';
 import Blog from "./Blog";
+import Cookies from 'js-cookie';
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { updateuid } from "./blogSlice";
 export default function Profile(){
     var nav=useNavigate();
-    const { userLoggedIn, setUserLoggedIn } = React.useContext(AppContext);
-    console.log(userLoggedIn);
+    //const { userLoggedIn, setUserLoggedIn } = React.useContext(AppContext);
+    //console.log(userLoggedIn);
     const [data,setdata]=React.useState([]);
     const [del,setdel]=React.useState(0);
     const [fc,setfc]=React.useState(-1);
     const [ffc,setffc]=React.useState(-1);
+    const dispatch = useDispatch();
     function dele(){
         setdel(del-1);
     }
+    async function logout(){
+        await axios.post("http://localhost:3001/logout", { });
+        Cookies.remove('uid');
+        dispatch(updateuid("nli"));
+        nav("/");
+    }
     React.useEffect(()=>{
-        async function data1(){
-            try{
+        /*async function data1(){
+            /*try{
             const posts=await axios.post("http://localhost:3001/myblogs",{id:userLoggedIn});
             setdata(posts.data);
             setdel(posts.data.length);
@@ -32,11 +42,11 @@ export default function Profile(){
             console.error();
         }
         }
-        data1();
+        data1();*/
     },[del]);
     return (
         <div className="profile">
-            <h1 style={{textAlign:"center"}}>{userLoggedIn}</h1>
+            <h1 style={{textAlign:"center"}}>userLoggedIn</h1>
             <div className="fcount">
             <div className="cf">
             <h6 className="count">{fc}</h6>
@@ -54,6 +64,8 @@ export default function Profile(){
             <div>
                 {data.map((item)=>{return <Blog item={item} fun={dele}/>})}
             </div>
+            <hr/>
+            <button className="lo" onClick={logout}>LOG OUT</button>
         </div>
     );
 }

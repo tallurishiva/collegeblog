@@ -25,3 +25,10 @@
     color: white;
     background-color: rgb(72, 69, 69);
 }
+.lo{
+    color: red;
+    width: 50%;
+    border: 1cm;
+    border-radius: 2px;
+    height: 50px;
+}

@@ -5,6 +5,11 @@
 .ser .form-control  {
     display:none;
 }
+button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .ser .btn-outline-success{
     display:none;
 }
@@ -19,4 +24,7 @@
         width: 70px;
         justify-content: end;
     }
+}
+.icon{
+    margin:0 20px 0 20px;
 }

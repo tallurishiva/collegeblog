@@ -1,19 +1,24 @@
 import React from "react";
 import image from "./andrew-neel-cckf4TsHAuw-unsplash.jpg";
 import './login.css';
+import Cookies from 'js-cookie';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-//import AppContext,{ useGc } from './Contex';
-import { AppContext } from './AppContext';
+import { UseSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux";
+import { updateuid } from "./blogSlice";
 export default function Login(){
-  const { userLoggedIn, setUserLoggedIn } = React.useContext(AppContext);
-    console.log("login--",userLoggedIn);
+  //const { userLoggedIn, setUserLoggedIn } = React.useContext(AppContext);
+    //console.log("login--",userLoggedIn);
     var [err,seterr]=React.useState(false);
     var [name,setname]=React.useState("");
+    const sessionCookie = Cookies.get('uid');
+    console.log("in login-",sessionCookie);
     // var [posted,setposted]=React.useState(false);
      var [password,setpassword]=React.useState("");
      //var [err,seterr]=React.useState(false);
      const nav=useNavigate();
+     const dispatch = useDispatch();
      async function sud(e){
          //preventdefault()
          //setposted(true);
@@ -23,8 +28,10 @@ export default function Login(){
            console.log(res.data);
            if(res.data==="success"){
              //seteid(name);
-            setUserLoggedIn(name);
-             nav("/");
+            //setUserLoggedIn(name);
+            Cookies.set('uid', name, { expires: 7 });
+            dispatch(updateuid(name));
+            nav("/");
          }
          else{
              seterr(true);

@@ -1,5 +1,5 @@
 import React from 'react';
-import image from "./WhatsApp Image 2023-06-30 at 22.54.22.jpg";
+//import image from "./WhatsApp Image 2023-06-30 at 22.54.22.jpg";
 import news from "./absolutvision-WYd_PkCa1BY-unsplash.jpg";
 import stories from "./naassom-azevedo-AcWC8WuCQ_k-unsplash.jpg";
 import ideas from "./absolutvision-82TpEld0_e4-unsplash.jpg";
