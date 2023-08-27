@@ -4,6 +4,7 @@ import Nav from './Nav';
 import Home from './Home';
 import Login from './Login';
 import Signin from './Signin';
+import Cat from './Cat';
 import Footer from './Footer';
 import Compose from './Compose'
 import Searchsol from './Searchsol';
@@ -22,6 +23,7 @@ export default function Rout(){
             <Route path="/Signin" element={<Signin/>}/>
             <Route path="/Maincont/:id" element={<Maincont />}/>
             <Route path="/Search/:item" element={<Searchsol/>}/>
+            <Route path="/category/:item" element={<Cat/>}/>
             <Route path="/Compose" element={<Compose/>}/>
           </Routes>
           <Footer/>

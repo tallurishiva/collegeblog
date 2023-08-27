@@ -8,7 +8,12 @@ const app = express();
 mongoose.connect("mongodb+srv://shivatalluri725:Shiva551@cluster0.xtiys65.mongodb.net/newblog");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
-app.use(cors());
+
+app.use(cors({
+  origin: 'http://localhost:3000', // Your frontend's origin
+  methods:["get","post"],
+  credentials: true, // Allow credentials (cookies)
+}));
 app.use(cookieparser());
 app.use(
   cookieSession({
@@ -72,7 +77,20 @@ app.post("/search", async function(req, res) {
     res.status(500).json({ error: "An error occurred while searching" });
   }
 });
-
+app.post("/cat", async function(req, res) {
+  const searchTerm = req.body.cat; // Get the search term from the request body
+  console.log("searhing for=",searchTerm);
+  try {
+    const searchResults = await blog.aggregate([
+      { $match: { $or:[{category:searchTerm}]}}
+    ]);
+    console.log(searchResults);
+    res.send(searchResults);
+  } catch (error){
+    console.error("Error searching:", error);
+    res.status(500).json({ error: "An error occurred while searching" });
+  }
+});
 app.post("/signup",function(req,res){
   const newuser={
     userName:req.body.name,
@@ -109,6 +127,7 @@ app.post("/login",function(req,res){
       if(found.length!=0){
         //res.cookie("uid",req.body.userid);
         req.session.uid = req.body.userid;
+        console.log(req.session);
         res.send("success");}
       else{
         res.send("err");
@@ -127,6 +146,7 @@ app.post("/typee",function(req,res){
   .catch(()=>{console.error()});
 })
 app.post("/blogid",function(req,res){
+  console.log(req.headers.cookie);
   blog.findById(req.body.id)
   .then((found)=>{res.send(found)})
   .catch(()=>{console.error();

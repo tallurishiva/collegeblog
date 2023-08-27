@@ -1,24 +1,28 @@
 import React from "react";
+import { UseSelector,useSelector } from "react-redux/es/hooks/useSelector";
 import './compose.css';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 export default function Compose(){
+   const nav=useNavigate();
     //console.log("composing=",userLoggedIn);
     var [title,settitle]=React.useState("");
     var [subtitle,setsubtitle]=React.useState("");
     var [Category,setcategory]=React.useState("");
     var [cont,setcont]=React.useState("");
+    const userid=useSelector(store=>store.blog.userid);
     console.log(Category);
     async function sud(event){
       event.preventDefault();
       //console.log("name:"+name+"  password:"+password +" email:"+email);
-      /*try{
-      var find= await axios.post("http://localhost:3001/blog",{eid:userLoggedIn,title:title,subtitle:subtitle,Category:Category,cont:cont});
+      try{
+      var find= await axios.post("http://localhost:3001/blog",{eid:userid,title:title,subtitle:subtitle,Category:Category,cont:cont});
       alert(find.data);
     }
       catch(error){
           console.error();
-      }*/
-  }  
+      }
+  }
     return (
         <div className="compose">
         <form onSubmit={sud}>

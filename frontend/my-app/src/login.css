@@ -56,9 +56,13 @@ img{
   
   .login-forgot {
     text-align: right;
-    margin-bottom: 1rem;
+    font-size: 17px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
   }
-  
+  .login-forgot input{
+    height: 15px;
+    width: 15px;
+  }
   .login-forgot-link {
     color: #777777;
     text-decoration: none;

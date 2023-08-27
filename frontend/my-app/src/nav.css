@@ -28,3 +28,8 @@ button{
 .icon{
     margin:0 20px 0 20px;
 }
+.navbar-expand-lg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -25,12 +25,12 @@ export default function Hcompp(props){
         }
     ,[])
        return (
-        <div className="hcomp" style={{backgroundColor:"rgb(160, 191, 224)"}}>
+        <div className="hcomp" style={{backgroundColor:"rgb(245, 245, 245)"}}>
             <h6 className="title">Explore New ideas</h6>
             <div className="content">
              {data.map((item)=>{return <Cont item={item}/>})}
             </div>
-            <p className="title2"><p>get more...</p></p>
+           
         </div>
        )
 }

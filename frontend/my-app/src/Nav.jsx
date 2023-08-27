@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {FcSearch} from "react-icons/fc";
 import {VscAccount} from "react-icons/vsc";
+import Logo from "./logo.png";
+import logoname from "./logoname.png";
 import Cookies from 'js-cookie';
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/hooks/useSelector";
@@ -34,11 +36,13 @@ const Nav = (props) =>{
     function searchsol(){
       let s="/Search/"+search;
       nav(s);
+      //Creative Blog
     }
+   
   return(
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
-        <a className="navbar-brand" href="" onClick={()=>{nav("/")}} >Creative Blog</a>
+        <a className="navbar-brand" href="" onClick={()=>{nav("/")}} >Creative Blog<img src={Logo} alt='logo' style={{height:20,width:20}}></img></a>
         <form className="d-flex ser" role="search">
             <input className="form-control me-2 " type="search" placeholder="Search" aria-label="Search" />
             <button className="btn btn-outline-success " type="submit">Search</button>
@@ -52,14 +56,14 @@ const Nav = (props) =>{
               <a className="nav-link active" aria-current="page" href="" onClick={()=>{nav("/")}}>Home</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">News</a>
+              <a className="nav-link" href="#" onClick={()=>{nav("/category/News")}}>News</a>
             </li>
             <li className="nav-item">
-            <a className="nav-link" href="#">updates</a>
+            <a className="nav-link" href="#" onClick={()=>{nav("/category/Ideas")}}>Ideas</a>
               
             </li>
             <li className="nav-item">
-              <a className="nav-link"  href="#">college stories</a>
+              <a className="nav-link"  href="#" onClick={()=>{nav("/category/Collegestories")}}>college stories</a>
             </li>
 
           </ul>
@@ -67,7 +71,7 @@ const Nav = (props) =>{
             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={(e)=>{setsearch(e.target.value)}} />
             <button className="btn btn-outline-success" type="submit" disabled={search===""} onClick={searchsol}><FcSearch/></button>
           </form>}
-
+          
           {userid!="nli" && show  && <VscAccount cursor="pointer" className='icon' onClick={()=>{nav("/Profile")}} size={25}/> }
           {userid==="nli" && show  && <button onClick={sign} type="button" style={{marginLeft:20}}  class="btn btn-light">sign in</button>}
           {userid==="nli" && show &&<button onClick={log} type="button" style={{marginLeft:20}} class="btn btn-primary">Log in</button>}

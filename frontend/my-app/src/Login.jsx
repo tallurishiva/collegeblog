@@ -3,6 +3,7 @@ import image from "./andrew-neel-cckf4TsHAuw-unsplash.jpg";
 import './login.css';
 import Cookies from 'js-cookie';
 import axios from "axios";
+import imgg from "./logo.png";
 import { useNavigate } from "react-router-dom";
 import { UseSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
@@ -12,6 +13,7 @@ export default function Login(){
     //console.log("login--",userLoggedIn);
     var [err,seterr]=React.useState(false);
     var [name,setname]=React.useState("");
+    var [rem,setrem]=React.useState(false);
     const sessionCookie = Cookies.get('uid');
     console.log("in login-",sessionCookie);
     // var [posted,setposted]=React.useState(false);
@@ -29,7 +31,9 @@ export default function Login(){
            if(res.data==="success"){
              //seteid(name);
             //setUserLoggedIn(name);
-            Cookies.set('uid', name, { expires: 7 });
+            if(rem){
+            Cookies.set('uid', name,{expires:14});}
+            else{Cookies.set('uid', name);}
             dispatch(updateuid(name));
             nav("/");
          }
@@ -50,13 +54,20 @@ export default function Login(){
     <input type="text" placeholder="username" className="login-input" autoComplete="none" value={name} onChange={(e)=>setname(e.target.value)} />
         <input type="password" placeholder="Password" className="login-input" value={password} onChange={(e)=>setpassword(e.target.value)} />
         <div className="login-forgot">
-          <a href="#" className="login-forgot-link">Forgot password?</a>
+  <label>
+    <input type="checkbox" checked={rem} onClick={()=>{setrem(!rem)}}/> Remember me
+  </label>
+        
         </div>
         {err && <em>userName and password doesn't match</em>}
+        
         <button type="submit" className="login-button">Login</button>
+        <div className="login-forgot">
+        <a href="#" className="login-forgot-link">Forgot password?</a></div>
       </form>
     </div>
     <div className="imag"><img src={image} className="img" style={{height:715,width:800}}></img></div>
         </div>
     );
 }
+//<a href="#" className="login-forgot-link">Forgot password?</a>

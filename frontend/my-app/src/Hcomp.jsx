@@ -33,7 +33,7 @@ export default function Hcomp(props){
             <div className="content">
             {data.map((item)=>{return <Cont item={item}/>})}
             </div>
-            <p className="title2"><p>get more...</p></p>
+            
         </div>
        )
 }

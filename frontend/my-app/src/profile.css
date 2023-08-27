@@ -1,17 +1,18 @@
 .profile{
     display: flex;
     flex-direction: column;
-   
+    align-items: center;
 }
 .fcount{
     display: flex;
     align-items: center;
     justify-content: center;
-    
      gap: 40px;
 }
 .cf{
-    background-color: azure;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 10px;
 }
 .count{
@@ -27,8 +28,9 @@
 }
 .lo{
     color: red;
-    width: 50%;
     border: 1cm;
     border-radius: 2px;
-    height: 50px;
+}
+button:hover{
+    color: rgb(142, 221, 142);
 }

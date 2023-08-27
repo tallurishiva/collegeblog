@@ -20,7 +20,7 @@ export default function Maincont(){
     React.useEffect(()=>{
         async function data1(){
             try{
-            const posts=await axios.post("http://localhost:3001/blogid",{id:id});
+            const posts=await axios.post("http://localhost:3001/blogid",{withCredentials: true,id:id});
             setdata(posts.data);
             console.log("ccc===",data);
             setdate(data.createdat.substring(0,10));

@@ -3,6 +3,7 @@ import "./profile.css";
 //import  {AppContext}  from "./AppContext";
 import { useNavigate } from 'react-router-dom';
 import Blog from "./Blog";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 import Cookies from 'js-cookie';
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -11,10 +12,11 @@ export default function Profile(){
     var nav=useNavigate();
     //const { userLoggedIn, setUserLoggedIn } = React.useContext(AppContext);
     //console.log(userLoggedIn);
+    const userid=useSelector(store=>store.blog.userid);
     const [data,setdata]=React.useState([]);
     const [del,setdel]=React.useState(0);
-    const [fc,setfc]=React.useState(-1);
-    const [ffc,setffc]=React.useState(-1);
+    const [fc,setfc]=React.useState(0);
+    const [ffc,setffc]=React.useState(0);
     const dispatch = useDispatch();
     function dele(){
         setdel(del-1);
@@ -26,14 +28,14 @@ export default function Profile(){
         nav("/");
     }
     React.useEffect(()=>{
-        /*async function data1(){
-            /*try{
-            const posts=await axios.post("http://localhost:3001/myblogs",{id:userLoggedIn});
+        async function data1(){
+            try{
+            const posts=await axios.post("http://localhost:3001/myblogs",{id:userid});
             setdata(posts.data);
             setdel(posts.data.length);
-            const ffc = await axios.post("http://localhost:3001/followingcount", { id:userLoggedIn });
+            const ffc = await axios.post("http://localhost:3001/followingcount", { id:userid });
             setfc(ffc.data.count);
-            const ff = await axios.post("http://localhost:3001/followcount", { id:userLoggedIn });
+            const ff = await axios.post("http://localhost:3001/followcount", { id:userid });
             console.log("ff==",ff.data.count);
             setffc(ff.data.count);
             console.log("ccc===",posts.data);
@@ -42,11 +44,11 @@ export default function Profile(){
             console.error();
         }
         }
-        data1();*/
+        data1();
     },[del]);
     return (
         <div className="profile">
-            <h1 style={{textAlign:"center"}}>userLoggedIn</h1>
+            <h1 style={{textAlign:"center"}}> Hello {userid}</h1>
             <div className="fcount">
             <div className="cf">
             <h6 className="count">{fc}</h6>
