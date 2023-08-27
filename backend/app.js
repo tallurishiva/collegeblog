@@ -5,10 +5,15 @@ const cookieSession=require("cookie-session");
 const cookieparser=require("cookie-parser");
 const bodyParser = require("body-parser");
 const app = express();
-mongoose.connect("mongodb+srv://shivatalluri725:Shiva551@cluster0.xtiys65.mongodb.net/newblog");
+const MONGODB_URI="mongodb+srv://shivatalluri725:Shiva551@cluster0.xtiys65.mongodb.net/newblog";
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+//mongoose.connect("mongodb+srv://shivatalluri725:Shiva551@cluster0.xtiys65.mongodb.net/newblog");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
-
+const PORT = process.env.PORT || 3001; 
 app.use(cors({
   origin: 'http://localhost:3000', // Your frontend's origin
   methods:["get","post"],
@@ -242,6 +247,6 @@ app.post("/cmts",function(req,res){
     })
     .catch(()=>{console.error()});
 });
-app.listen(3001, function(){
+app.listen(PORT, function(){
     console.log("Server started on port 3001");
   });
