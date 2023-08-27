@@ -10,6 +10,7 @@ import Compose from './Compose'
 import Searchsol from './Searchsol';
 import Profile from './Profile';
 import Maincont from './Maincont';
+import Error from './Error';
 export default function Rout(){
     return (
       <div> 
@@ -25,6 +26,7 @@ export default function Rout(){
             <Route path="/Search/:item" element={<Searchsol/>}/>
             <Route path="/category/:item" element={<Cat/>}/>
             <Route path="/Compose" element={<Compose/>}/>
+            <Route path="*" element={<Error/>}/>
           </Routes>
           <Footer/>
          
