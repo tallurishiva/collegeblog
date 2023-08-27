@@ -14,11 +14,12 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 const PORT = process.env.PORT || 3001; 
-app.use(cors({
+/*app.use(cors({
   origin: 'http://localhost:3000', // Your frontend's origin
   methods:["get","post"],
   credentials: true, // Allow credentials (cookies)
-}));
+}));*/
+app.use(cors());
 app.use(cookieparser());
 app.use(
   cookieSession({
